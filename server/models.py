@@ -8,7 +8,7 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
-class Game(db.Model, SerealizerMixin):
+class Game(db.Model, SerializerMixin):
     __tablename__ = 'games'
 
     serialize_rules = ('-reviews.game',)
@@ -26,7 +26,7 @@ class Game(db.Model, SerealizerMixin):
     def __repr__(self):
         return f'<Game {self.title} for {self.platform}>'
 
-class Review(db.Model, SerealizerMixin):
+class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     serialize_rules = ('-game.reviews', '-user.reviews',)
@@ -43,7 +43,7 @@ class Review(db.Model, SerealizerMixin):
     def __repr__(self):
         return f'<Review ({self.id}) of {self.game}: {self.score}/10>'
 
-class User(db.Model,  SerealizerMixin):
+class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     serialize_rules = ('-reviews.user',)
