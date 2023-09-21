@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from flask import Flask, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -23,7 +21,6 @@ def index():
 def games():
 
     games = []
-    game = Game.query.filter(Game.id == id).first()
     for game in Game.query.all():
         game_dict = {
             "title": game.title,
@@ -34,9 +31,23 @@ def games():
         games.append(game_dict)
 
     response = make_response(
-        jsonify(games),
+        games,
         200
     )
+
+    return response
+
+@app.route('/games/<int:id>')
+def game_by_id(id):
+    game = Game.query.filter(Game.id == id).first()
+    
+    game_dict = game.to_dict()
+
+    response = make_response(
+        game_dict,
+        200
+    )
+
     return response
 
 if __name__ == '__main__':
