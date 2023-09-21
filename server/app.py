@@ -34,7 +34,8 @@ def games():
 
     response = make_response(
         jsonify(games),
-        200
+        200,
+         {"Content-Type": "application/json"}
     )
     return response
 
